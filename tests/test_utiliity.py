@@ -65,7 +65,7 @@ def test_generate_text():
     end_time = time.time()
     elapsed_time = end_time - start_time
     print("Generate Text By Audio Time elapsed: {:.2f} seconds".format(elapsed_time))
-    assert "어쩔 어쩔 저쩔 저쩔" in text
+    assert "안녕하세요" in text
 
 def test_add_user_message_to_messages():
     existing_messages = [
@@ -103,7 +103,7 @@ def test_get_message_by_chatgpt():
     assert received_message == test_quote
 
 def test_get_audio_file_url_using_polly():
-    message = "저쩔 저쩔 어쩔티비"
+    message = "안녕하세요"
     start_time = time.time()
     test_file_name = create_output_file_name()
     url = get_audio_file_url_using_polly(message)
