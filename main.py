@@ -15,6 +15,7 @@ app = Flask(__name__)
 
 @app.route('/answer', methods=['POST'])
 def generate_answer():
+    #When you are debugging the code, I recommend delete this try-except block for debugging.
     try : 
         input_data = request.get_json()
         audio_data = decode_audio(input_data["audio"])
