@@ -35,8 +35,8 @@ if LOCAL:
         aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY")
     )
 else:
-    s3 = boto3.client('s3')
-    polly = boto3.client('polly')
+    s3 = boto3.client('s3', region_name="ap-northeast-2")
+    polly = boto3.client('polly', region_name="ap-northeast-2")
 
 openai.api_key = OPENAI_API_KEY
 polly_voice = "Seoyeon"
