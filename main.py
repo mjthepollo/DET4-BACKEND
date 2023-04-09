@@ -15,16 +15,20 @@ app = Flask(__name__)
 
 @app.route('/answer', methods=['POST'])
 def generate_answer():
-    input_data = request.get_json()
-    audio_data = decode_audio(input_data["audio"])
-    messages = input_data["messages"]
-    save_audio(audio_data, create_input_file_name())
-    text_gotten_by_input_data = generate_text(audio_data)
-    messages =  add_user_message_to_messages(messages, text_gotten_by_input_data)
-    answer_by_chat_gpt = get_message_by_chatgpt(messages)
-    output_audio_url = get_audio_file_url_using_polly(answer_by_chat_gpt)
-    messages = add_assistant_message_to_messages(messages, answer_by_chat_gpt)
-    return jsonify({'messages': messages, "audio_url":output_audio_url}), 200
+    try : 
+        input_data = request.get_json()
+        audio_data = decode_audio(input_data["audio"])
+        messages = input_data["messages"]
+        save_audio(audio_data, create_input_file_name())
+        text_gotten_by_input_data = generate_text(audio_data)
+        messages =  add_user_message_to_messages(messages, text_gotten_by_input_data)
+        answer_by_chat_gpt = get_message_by_chatgpt(messages)
+        output_audio_url = get_audio_file_url_using_polly(answer_by_chat_gpt)
+        messages = add_assistant_message_to_messages(messages, answer_by_chat_gpt)
+        return jsonify({'messages': messages, "audio_url":output_audio_url}), 200
+    except Exception as e:
+        return jsonify({"ERROR MSG":e}), 500
+
 
 
 def lambda_handler(event, context):
