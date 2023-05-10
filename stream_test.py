@@ -57,7 +57,7 @@ def use_non_stream_answer(message):
             {'role': 'user', 'content': message}
         ],
     )
-    spent_time= time.time() - non_stream_start_time
+    spent_time= (time.time() - non_stream_start_time)
     non_stream_response_time_lists.append(spent_time)
     non_stream_answer = response_not_stream.choices[0].message.content.strip()
     non_stream_answer_lists.append(non_stream_answer)
@@ -75,13 +75,14 @@ for message in message_lists:
     use_non_stream_answer(translated_massage)
 
 
-print(stream_answer_lists)
-print(non_stream_answer_lists)
-print(stream_response_time_lists)
-print(non_stream_response_time_lists)
 
+#---------------------TO CSV--------------------------------
 
 import csv
+
+
+def time_to_2f(time):
+    return "{:.2f}".format(time)
 
 with open('output_compare.csv', mode='w', newline='') as csv_file:
     # Create a CSV writer object
@@ -92,14 +93,14 @@ with open('output_compare.csv', mode='w', newline='') as csv_file:
         row = []
         row.append(message_lists[i])
         row.append(stream_answer_lists[2*i])
-        row.append(stream_response_time_lists[2*i])
+        row.append(time_to_2f(stream_response_time_lists[2*i]))
         row.append(non_stream_answer_lists[2*i])
-        row.append(non_stream_response_time_lists[2*i])
+        row.append(time_to_2f(non_stream_response_time_lists[2*i]))
         row.append(translated_message_lists[i])
         row.append(stream_answer_lists[2*i+1])
-        row.append(stream_response_time_lists[2*i+1])
+        row.append(time_to_2f(stream_response_time_lists[2*i+1]))
         row.append(non_stream_answer_lists[2*i+1])
-        row.append(non_stream_response_time_lists[2*i+1])
+        row.append(time_to_2f(non_stream_response_time_lists[2*i+1]))
         row_lists.append(row)
 
     # Write data to CSV file
