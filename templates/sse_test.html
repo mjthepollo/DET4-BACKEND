@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSE_TEST</title>
+  </head>
+  <body>
+    <h1>SSE_TEST</h1>
+    <button id="sse_event_button">SSE_EVENT!</button>
+  </body>
+  <script type="text/javascript">
+    const SSE_EVENT_BUTTON = document.getElementById("sse_event_button");
+    SSE_EVENT_BUTTON.addEventListener("click", sseEventStart);
+    function sseEventStart() {
+      const source = new EventSource("/stream");
+      const audio = new Audio();
+
+      source.onmessage = function (event) {
+        console.log(event);
+      };
+    }
+  </script>
+</html>
